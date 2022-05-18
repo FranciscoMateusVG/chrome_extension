@@ -6,7 +6,7 @@ import { IRadios } from "./interfaces";
 import { MyFormControlLabel } from "./MyFormControlLabel";
 
 export const Radios: React.FC<IRadios> = ({ name, options, state }) => {
-  const [_, set] = useRecoilState(state);
+  const [value, set] = useRecoilState(state);
   const handleChange = (event: any) => {
     set(event.target.value);
   };
@@ -20,7 +20,7 @@ export const Radios: React.FC<IRadios> = ({ name, options, state }) => {
     <RadioGroup
       sx={sx}
       name={name}
-      defaultValue={options[0]}
+      defaultValue={value}
       onChange={handleChange}
     >
       {options.map((option, index) => (

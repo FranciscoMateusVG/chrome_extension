@@ -1,83 +1,53 @@
-import { Card } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import "./contentScript.css";
-import { injection } from "./inject";
+import { inject } from "./inject";
 
 const App: React.FC = () => {
-  document.body.addEventListener("click", processEvent);
-  const [idProp, setId] = useState("");
-  const [classProp, setClass] = useState("");
-  const [parentProp, setParent] = useState("");
+  const [element, setElement] = useState<any>("");
+  const [active, setActive] = useState<boolean>(false);
+
   function processEvent(e) {
-    const id = e.target.id;
-    const className = e.target.className;
+    const targetElement = e.target;
+    if (window.status === "true") {
+      setElement((previouseElement) => {
+        if (previouseElement) previouseElement.style.border = "none";
 
-    if (idProp) {
-      document.getElementById(idProp).style.border = "none";
-    }
+        targetElement.style.border = "1px solid red";
 
-    if (classProp) {
-      const collection = document.getElementsByClassName(classProp);
-      console.log(collection[0]);
-      collection[0].setAttribute("style", "border:none;");
-    }
-
-    setId(id);
-    setClass(className);
-
-    if (id) {
-      document.getElementById(id).style.border = "3px solid red";
-    }
-
-    if (className) {
-      const collection = document.getElementsByClassName(className);
-      console.log(collection[0]);
-      collection[0].setAttribute("style", "border:3px solid blue;");
+        return targetElement;
+      });
     }
   }
 
-  const handleInjection = () => {
-    if (idProp) {
-      injection(
-        idProp,
-        '{"icon":"","widgetBrandColor":"","backgroundColor":"","mode":"","layout":"","font":"","size":""}'
-      );
+  useEffect(() => {
+    if (!active) {
+      if (element) {
+        element.style.border = "none";
+        setElement("");
+      }
+      window.status = "false";
+      document.body.removeEventListener("click", processEvent);
+    } else {
+      window.status = "true";
+      document.body.addEventListener("click", processEvent);
     }
+  }, [active]);
 
-    if (classProp) {
-      injection(
-        classProp,
-        '{"icon":"","widgetBrandColor":"","backgroundColor":"","mode":"","layout":"","font":"","size":""}'
-      );
+  chrome.runtime.onMessage.addListener(
+    // this is the message listener
+    function (request, sender, sendResponse) {
+      console.log(request);
+      if (request.message === "status") {
+        setActive(request.status);
+      }
+      if (request.message === "injection") {
+        //inject(request.injection, element);
+      }
+      sendResponse("ok");
     }
-  };
-
-  const handleParent = () => {
-    if (idProp) {
-      const parent = document.getElementById(idProp).parentElement;
-      setParent(parent.id || parent.className);
-      parent.style.border = "border:3px solid green;";
-    }
-
-    if (classProp) {
-      const parent =
-        document.getElementsByClassName(classProp)[0].parentElement;
-      setParent(parent.id || parent.className);
-
-      parent.setAttribute("style", "border:3px solid green;");
-    }
-  };
-
-  return (
-    <Card className="overlayCard">
-      <div>Id: {idProp}</div>
-      <div>Class: {classProp}</div>
-      <div>Parent: {parentProp}</div>
-      <button onClick={handleInjection}> Inject! </button>
-      <button onClick={handleParent}> Parent up! </button>
-    </Card>
   );
+
+  return <></>;
 };
 
 const rootDiv = document.createElement("div");

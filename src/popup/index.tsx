@@ -2,8 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Forms } from "./Forms";
 import { universalAttributes, universalType } from "./atoms";
-import "./popup.css";
 import { RecoilRoot } from "recoil";
+import { Activation } from "./Activation";
+
+import "./popup.css";
+import { Injection } from "./Injection";
+
 const App: React.FC = () => {
   return (
     <>
@@ -20,6 +24,10 @@ const App: React.FC = () => {
           }}
           state={universalAttributes}
         />
+
+        <Activation />
+        <div></div>
+        <Injection />
       </RecoilRoot>
     </>
   );

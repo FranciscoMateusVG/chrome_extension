@@ -15,3 +15,8 @@ export const universalAttributes = atom<Checkboxes>({
     },
   ],
 });
+
+export const universalActive = atom({
+  key: "UNIVERSAL_ACTIVE", // unique ID (with respect to other atoms/selectors)
+  default: "active", // default value (aka initial value)
+});
