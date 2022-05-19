@@ -41,7 +41,7 @@ const App: React.FC = () => {
         setActive(request.status);
       }
       if (request.message === "injection") {
-        //inject(request.injection, element);
+        inject(request.injection, element);
       }
       sendResponse("ok");
     }
