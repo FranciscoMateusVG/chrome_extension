@@ -1,4 +1,12 @@
 body {
-  width: 600px;
-  height: 600px;
+  width: 485px;
+  margin: 0;
+}
+
+.app_container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin-left: auto;
+  background-image: url("../static/wave-haikei-3.svg");
 }

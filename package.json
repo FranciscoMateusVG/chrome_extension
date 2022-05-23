@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@mui/icons-material": "^5.8.0",
     "@types/chrome": "^0.0.184",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",

@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Checkboxes } from "../Forms/Checkboxes/interfaces";
+import { Checkboxes } from "../app/components/Forms/Checkboxes/interfaces";
 
 export const universalType = atom({
   key: "UNIVERSAL_TYPE", // unique ID (with respect to other atoms/selectors)
@@ -19,4 +19,9 @@ export const universalAttributes = atom<Checkboxes>({
 export const universalActive = atom({
   key: "UNIVERSAL_ACTIVE", // unique ID (with respect to other atoms/selectors)
   default: "active", // default value (aka initial value)
+});
+
+export const universalTabsValue = atom({
+  key: "UNIVERSAL_TABS-VALUE", // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
 });
