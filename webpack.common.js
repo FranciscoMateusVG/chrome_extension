@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     popup: path.resolve("src/popup"),
     options: path.resolve("src/options"),
-    background: path.resolve("src/background/background.ts"),
+    contextmenu: path.resolve("src/contextmenu/contextmenu.ts"),
     contentScript: path.resolve("src/contentScript/contentScript.tsx"),
   },
   module: {

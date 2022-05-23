@@ -25,3 +25,8 @@ export const universalTabsValue = atom({
   key: "UNIVERSAL_TABS-VALUE", // unique ID (with respect to other atoms/selectors)
   default: 0, // default value (aka initial value)
 });
+
+export const universalActiveValue = atom({
+  key: "UNIVERSAL_ACTIVE-VALUE", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});

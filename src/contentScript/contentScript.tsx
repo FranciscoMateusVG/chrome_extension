@@ -33,15 +33,6 @@ const App: React.FC = () => {
     }
   }, [active]);
 
-  chrome.contextMenus.removeAll();
-  chrome.contextMenus.create({
-    title: "first",
-    contexts: ["browser_action"],
-    onclick: function () {
-      alert("first");
-    },
-  });
-
   chrome.runtime.onMessage.addListener(
     // this is the message listener
     function (request, sender, sendResponse) {
