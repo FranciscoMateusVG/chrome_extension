@@ -24,7 +24,7 @@ export const inject = (
     size,
     backgroundColor,
   } = attributes;
-  console.log(attributes);
+
   const isMobile = mobileCheck();
   const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=${key}&host=&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
   let height = "192px";

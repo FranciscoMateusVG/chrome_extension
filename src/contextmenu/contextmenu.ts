@@ -1,5 +1,3 @@
-console.log("carregado");
-
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     title: "Insert Before",

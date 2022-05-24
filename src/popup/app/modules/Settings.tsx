@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { getStoredAttributes } from "../../../utils/storage";
-import { darkMode, layoutVerical, noIcon } from "../../atoms";
+import { darkMode, layoutVerical, noIcon, size } from "../../atoms";
 import Card from "../components/Card";
 import CheckBox from "../components/CheckBox";
+import Select from "../components/Select";
 
 const Settings: React.FC = () => {
   const [noIconValue, setNoIcon] = useRecoilState(noIcon);
   const [darkModeValue, setDarkMode] = useRecoilState(darkMode);
   const [layoutVericalValue, setLayoutVerical] = useRecoilState(layoutVerical);
+  const [sizeValue, setSize] = useRecoilState(size);
 
   useEffect(() => {
     getStoredAttributes().then((result) => {
@@ -26,7 +28,9 @@ const Settings: React.FC = () => {
             case "noIcon":
               setNoIcon(value);
               break;
-
+            case "size":
+              setSize(atribute[key]);
+              break;
             default:
               break;
           }
@@ -53,6 +57,12 @@ const Settings: React.FC = () => {
             label="Layout Vertical"
             checked={layoutVericalValue}
             setValue={setLayoutVerical}
+          />
+          <Select
+            label="Size"
+            values={["large", "medium", "small"]}
+            value={sizeValue}
+            setValue={setSize}
           />
         </div>
       </Card>

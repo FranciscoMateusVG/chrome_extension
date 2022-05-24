@@ -31,22 +31,19 @@ export class Attributes implements AttributesProps {
       this.attributes.forEach((atribute) => {
         const key = Object.keys(atribute)[0];
         const value = atribute[key];
-
+        console.log(key, value);
         switch (key) {
           case "darkMode":
-            if (value === "true") {
-              this[key] = "dark";
-            }
+            if (value === "true") this[key] = "dark";
             break;
           case "layoutVertical":
-            if (value === "true") {
-              this[key] = "vertical";
-            }
+            if (value === "true") this[key] = "vertical";
             break;
           case "noIcon":
-            if (value === "true") {
-              this[key] = "false";
-            }
+            if (value === "true") this[key] = "false";
+            break;
+          case "size":
+            this[key] = value;
             break;
 
           default:

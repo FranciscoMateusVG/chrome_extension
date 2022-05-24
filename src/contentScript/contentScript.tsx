@@ -38,7 +38,6 @@ const App: React.FC = () => {
   chrome.runtime.onMessage.addListener(
     // this is the message listener
     function (request, sender, sendResponse) {
-      console.log(request);
       if (request.message === "status") {
         setActive(request.status);
       }

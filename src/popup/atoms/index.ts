@@ -31,3 +31,8 @@ export const layoutVerical = atom({
   key: "LAYOUT-VERTICAL",
   default: false,
 });
+
+export const size = atom({
+  key: "SIZE",
+  default: "large",
+});
