@@ -3,6 +3,8 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import * as React from "react";
 import { SetterOrUpdater } from "recoil";
 import { pink } from "@mui/material/colors";
+import { setStoredAttribute } from "../../../../utils/storage";
+import { camelize } from "../../../../utils/common";
 
 interface ICheckbox {
   label: string;
@@ -18,9 +20,12 @@ const CheckBoxComponent: React.FC<ICheckbox> = ({
   return (
     <FormControlLabel
       onChange={(e) => {
-        //@ts-ignore
-        const status = e.target.checked;
+        const event = e as React.ChangeEvent<HTMLInputElement>;
+        const status = event.target.checked;
         setValue(status);
+
+        const atribute = camelize(label);
+        setStoredAttribute(atribute, `${status}`);
       }}
       control={
         <Checkbox
