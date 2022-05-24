@@ -1,32 +1,33 @@
 import { atom } from "recoil";
-import { Checkboxes } from "../app/components/Forms/Checkboxes/interfaces";
 
-export const universalType = atom({
-  key: "UNIVERSAL_TYPE", // unique ID (with respect to other atoms/selectors)
-  default: "embedded", // default value (aka initial value)
-});
-
-export const universalAttributes = atom<Checkboxes>({
-  key: "UNIVERSAL_ATTRIBUTES", // unique ID (with respect to other atoms/selectors)
-  default: [
-    {
-      name: "No Icon",
-      checked: false,
-    },
-  ],
-});
-
+// General
 export const universalActive = atom({
-  key: "UNIVERSAL_ACTIVE", // unique ID (with respect to other atoms/selectors)
-  default: "active", // default value (aka initial value)
+  key: "UNIVERSAL_ACTIVE",
+  default: "active",
 });
 
 export const universalTabsValue = atom({
-  key: "UNIVERSAL_TABS-VALUE", // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: "UNIVERSAL_TABS-VALUE",
+  default: 0,
 });
 
 export const universalActiveValue = atom({
-  key: "UNIVERSAL_ACTIVE-VALUE", // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: "UNIVERSAL_ACTIVE-VALUE",
+  default: false,
+});
+
+// Attributes
+export const noIcon = atom({
+  key: "NO_ICON",
+  default: false,
+});
+
+export const darkMode = atom({
+  key: "DARK_MODE",
+  default: false,
+});
+
+export const layoutVerical = atom({
+  key: "LAYOUT-VERTICAL",
+  default: false,
 });

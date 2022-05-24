@@ -1,7 +1,42 @@
-export const inject = (where: string, element: Element) => {
+interface Atributes {
+  icon: string;
+  brandColor: string;
+  key: string;
+  mode: string;
+  layout: string;
+  font: string;
+  size: string;
+  backgroundColor: string;
+}
+
+export const inject = (
+  where: string,
+  element: Element,
+  atributes?: Atributes
+) => {
+  const { icon, brandColor, key, mode, layout, font, size, backgroundColor } =
+    atributes;
+
+  const isMobile = mobileCheck();
+
+  const src = `"https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${icon}&brandColor=${brandColor}&key=${key}&host=&mode=${mode}&layout=${layout}&font=${font}&size=${size}&backgroundColor=${backgroundColor}"`;
+
+  const innerHTML = `
+                          <iframe
+                             id="papayaUWIframe"
+                             style="width: 100%;"
+                             src=${src}
+                             scrolling="no"
+                             frameborder="0"
+                             allowtransparency="true"
+                          </iframe>
+                    `;
+
   if (element && where) {
     const div = document.createElement("div");
+    div.innerHTML = innerHTML;
     div.id = "papaya-universal";
+    div.style.width = "100%";
     switch (where) {
       case "before":
         element.parentNode.insertBefore(div, element);
@@ -10,191 +45,25 @@ export const inject = (where: string, element: Element) => {
         element.parentNode.insertBefore(div, element.nextElementSibling);
         break;
       default:
-        element.innerHTML = "";
+        element.innerHTML = innerHTML;
         element.id = "papaya-universal";
         break;
     }
-
-    window.PAPAYA_PAYEE_NAME = "INSERT_PAYEE_NAME_HERE";
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "";
-    script.id = "widget-script";
-    script.dataset.key = "INSERT_KEY_HERE";
-    script.dataset.fontFamily = "OpenSans-Regular";
-    script.dataset.brandColor = "#FBD227";
-    script.dataset.backGroundColor = "#FAFAFA";
-    document.body.appendChild(script);
-
-    /*
-- import and set up partner config
-- add widget functions
-- add window message listener logic
-- load widget
-*/
-
-    const papayaWidget = {
-      universalConfig: {
-        targetElementId: "papaya-universal",
-        template: "default",
-        theme: "default",
-        functions:
-          "phoneInputMask,phoneInputCheckInterval,phoneSubmit,retrySMS,openDownloadPage,universalController",
-        override: {
-          style: "",
-        },
-      },
-      papayaProtocolAndHost: "https://test.papayapay.com",
-      widgetVersion: "v2",
-      widgetGAVariantName: "",
-      partner: "Universal",
-      partnerUrlSafe: "Universal",
-      frameIds: ["papayaRequestIframe", "papayaUniversalIframe"],
-      funcs: {
-        isMobile: () => {
-          // check against browser user agent
-          const mobileUserAgents = [
-            /Android/i,
-            /webOS/i,
-            /iPhone/i,
-            /iPad/i,
-            /iPod/i,
-            /BlackBerry/i,
-            /Windows Phone/i,
-          ];
-          return mobileUserAgents.some((expression) => {
-            return navigator.userAgent.match(expression);
-          });
-        },
-        addUniversal: (universalContainerId, isCollapsed = false) => {
-          // inject button element at target id
-          const dismissalClick = ``;
-          const collapsed = isCollapsed ? "collapsed" : "";
-          const mobile = papayaWidget.funcs.isMobile() ? "mobile" : "";
-          const protocolAndHost = window.pph
-            ? window.pph
-            : papayaWidget.papayaProtocolAndHost;
-          const universalContainer =
-            document.getElementById(universalContainerId);
-          const widgetScript = document.querySelector(
-            "#widget-script"
-          ) as HTMLScriptElement;
-          const icon = widgetScript.dataset.icon;
-          const widgetBrandColor = widgetScript.dataset.brandColor;
-          const brandColor = widgetBrandColor
-            ? widgetBrandColor.replace("#", "")
-            : "";
-          const widgetBackGroundColor = widgetScript.dataset.backGroundColor;
-          const backgroundColor = widgetBackGroundColor
-            ? widgetBackGroundColor.replace("#", "")
-            : "";
-          const key = widgetScript.dataset.key;
-          const mode = widgetScript.dataset.mode;
-          const layout = widgetScript.dataset.layout;
-          const font = widgetScript.dataset.fontFamily;
-          const size = widgetScript.dataset.size;
-          const host = window.location.hostname;
-
-          universalContainer.innerHTML = `
-                          <div ${dismissalClick} id="universalModalBackground" class="${collapsed} ${mobile}" style="z-index: 999999;">
-                          <div id="universalModalContent">
-                          <iframe
-                           id="papayaUniversalIframe"
-                             src="${protocolAndHost}/widgets/v2/endpoints/universal.html.php?isGeneric=false
-                                &partner=${
-                                  papayaWidget.partnerUrlSafe
-                                }&mobile=${papayaWidget.funcs.isMobile()}&icon=${icon}&brandColor=${brandColor}&key=${key}&host=${host}&mode=${mode}&layout=${layout}&font=${font}&size=${size}&pph=${protocolAndHost}&backgroundColor=${backgroundColor}"
-                             scrolling="no"
-                             frameborder="0"
-                             allowtransparency="true"
-                          </iframe>
-                          </div>
-                          </div>`;
-
-          papayaWidget.frameIds.push("papayaUniversalIframe");
-
-          const universalFrame = document.getElementById(
-            "papayaUniversalIframe"
-          );
-
-          if (size === "small") {
-            universalContainer.style.height = "155px";
-            universalFrame.style.height = "155px";
-          }
-
-          if (layout !== "vertical" && !size) {
-            universalContainer.style.height = "210px";
-            universalFrame.style.height = "210px";
-          }
-
-          if (layout === "vertical" && size === "small") {
-            universalContainer.style.height = "235px";
-            universalFrame.style.height = "235px";
-          }
-
-          if (layout !== "vertical" && size === "medium") {
-            universalContainer.style.height = "195px";
-            universalFrame.style.height = "195px";
-          }
-
-          if (layout === "vertical" && size === "medium") {
-            universalContainer.style.height = "240px";
-            universalFrame.style.height = "240px";
-          }
-
-          if (layout === "vertical" && size === "medium") {
-            universalContainer.style.height = "240px";
-            universalFrame.style.height = "240px";
-          }
-
-          if (layout === "vertical") {
-            if (papayaWidget.funcs.isMobile()) {
-              universalContainer.style.height = "170px";
-              universalFrame.style.height = "180px";
-            } else {
-              universalContainer.style.height = "260px";
-              universalFrame.style.height = "260px";
-            }
-          }
-        },
-        addStyle: () => {
-          // inject widget css
-          let styleElement = document.createElement("link");
-          styleElement.rel = "stylesheet";
-          styleElement.type = "text/css";
-          styleElement.href = `${papayaWidget.papayaProtocolAndHost}/widgets/${papayaWidget.widgetVersion}/endpoints/style.css.php?type=payload&isGeneric=false&partner=${papayaWidget.partnerUrlSafe}`;
-          document.getElementsByTagName("head")[0].appendChild(styleElement);
-          return styleElement;
-        },
-      },
-    };
-    papayaWidget.partner = "INSERT_PAYEE_NAME_HERE";
-    papayaWidget.partnerUrlSafe = encodeURIComponent(papayaWidget.partner);
-    papayaWidget.frameIds = [];
-
-    // - add widget functions
-    papayaWidget.funcs.isMobile = () => {
-      // check against browser user agent
-      const mobileUserAgents = [
-        /Android/i,
-        /webOS/i,
-        /iPhone/i,
-        /iPad/i,
-        /iPod/i,
-        /BlackBerry/i,
-        /Windows Phone/i,
-      ];
-      return mobileUserAgents.some((expression) => {
-        return navigator.userAgent.match(expression);
-      });
-    };
-    // - load widget
-    // style always first
-    papayaWidget.funcs.addStyle();
-
-    console.log("universal enabled");
-    papayaWidget.funcs.addUniversal(
-      papayaWidget.universalConfig.targetElementId
-    );
   }
+};
+
+const mobileCheck = () => {
+  let check = false;
+  (function (a) {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+        a
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        a.substr(0, 4)
+      )
+    )
+      check = true;
+  })(navigator.userAgent || navigator.vendor);
+  return check;
 };
