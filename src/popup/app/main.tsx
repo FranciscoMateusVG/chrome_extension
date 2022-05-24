@@ -18,9 +18,6 @@ const Main: React.FC = () => {
       <TabPanel value={value} index={1}>
         <Settings />
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        TBD
-      </TabPanel>
     </>
   );
 };

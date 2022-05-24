@@ -3,7 +3,6 @@ import { AttributesProps } from "../contentScript/inject";
 export class Attributes implements AttributesProps {
   noIcon: string;
   brandColor: string;
-  key: string;
   darkMode: string;
   layoutVertical: string;
   font: string;
@@ -18,7 +17,6 @@ export class Attributes implements AttributesProps {
     this.attributes = attributes;
     this.noIcon = "";
     this.brandColor = "";
-    this.key = "INSERT_KEY_HERE";
     this.darkMode = "";
     this.layoutVertical = "";
     this.font = "";
@@ -31,7 +29,7 @@ export class Attributes implements AttributesProps {
       this.attributes.forEach((atribute) => {
         const key = Object.keys(atribute)[0];
         const value = atribute[key];
-        console.log(key, value);
+
         switch (key) {
           case "darkMode":
             if (value === "true") this[key] = "dark";
@@ -44,6 +42,12 @@ export class Attributes implements AttributesProps {
             break;
           case "size":
             this[key] = value;
+            break;
+          case "brandColor":
+            this[key] = value.replace("#", "");
+            break;
+          case "backgroundColor":
+            this[key] = value.replace("#", "");
             break;
 
           default:

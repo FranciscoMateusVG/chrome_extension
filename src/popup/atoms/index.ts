@@ -36,3 +36,13 @@ export const size = atom({
   key: "SIZE",
   default: "large",
 });
+
+export const brandColor = atom({
+  key: "BRAND_COLOR",
+  default: "",
+});
+
+export const bgColor = atom({
+  key: "BACKGROUND_COLOR",
+  default: "",
+});

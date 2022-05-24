@@ -1,7 +1,6 @@
 export interface AttributesProps {
   noIcon: string;
   brandColor: string;
-  key: string;
   darkMode: string;
   layoutVertical: string;
   font: string;
@@ -17,7 +16,6 @@ export const inject = (
   const {
     noIcon,
     brandColor,
-    key,
     darkMode,
     layoutVertical,
     font,
@@ -25,8 +23,10 @@ export const inject = (
     backgroundColor,
   } = attributes;
 
+  console.log(brandColor);
+
   const isMobile = mobileCheck();
-  const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=${key}&host=&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
+  const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?partner=Universal_Embedded&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=INSERT_KEY_HERE&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
   let height = "192px";
 
   if (size === "small") {

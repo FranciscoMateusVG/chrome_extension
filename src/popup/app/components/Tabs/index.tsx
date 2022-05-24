@@ -2,6 +2,7 @@ import React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import SettingsIcon from "@mui/icons-material/Settings";
+import TerminalIcon from "@mui/icons-material/Terminal";
 import { universalTabsValue } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
@@ -35,8 +36,7 @@ const VerticalTabs: React.FC = () => {
         }}
       >
         <Tab icon={<SettingsIcon />} {...a11yProps(0)} />
-        <Tab icon={<SettingsIcon />} {...a11yProps(1)} />
-        <Tab icon={<SettingsIcon />} {...a11yProps(2)} />
+        <Tab icon={<TerminalIcon />} {...a11yProps(1)} />
       </Tabs>
     </>
   );

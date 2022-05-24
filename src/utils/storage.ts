@@ -3,6 +3,8 @@ export interface LocalStorage {
   darkMode: string;
   layoutVertical: string;
   size: string;
+  brandColor: string;
+  backgroundColor: string;
 }
 
 export type LocalStorageKeys = keyof LocalStorage;
@@ -28,6 +30,8 @@ export function getStoredAttributes(): Promise<
     "layoutVertical",
     "noIcon",
     "size",
+    "brandColor",
+    "backgroundColor",
   ];
 
   return new Promise((resolve) => {
