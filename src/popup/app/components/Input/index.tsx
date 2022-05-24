@@ -8,16 +8,12 @@ interface IInputComponent {
   label: string;
   value: string;
   setValue: SetterOrUpdater<string>;
-  onClick: (e) => void;
-  onBlur: (e) => void;
 }
 
 const InputComponent: React.FC<IInputComponent> = ({
   label,
   value,
   setValue,
-  onClick,
-  onBlur,
 }) => {
   const handleChange = (event: any) => {
     const selected = event.target.value as string;
@@ -30,8 +26,6 @@ const InputComponent: React.FC<IInputComponent> = ({
 
   return (
     <TextField
-      onBlur={onBlur}
-      onClick={onClick}
       size="small"
       value={value}
       onChange={handleChange}

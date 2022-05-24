@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ToggleButton } from "../components/Toggle";
 import { HexColorPicker } from "react-colorful";
 import { useRecoilState } from "recoil";
-import { camelize } from "../../../utils/common";
 import {
   getStoredAttributes,
   setStoredAttribute,
@@ -15,6 +14,7 @@ import {
   size,
   bgColor,
 } from "../../atoms";
+import ColorizeIcon from "@mui/icons-material/Colorize";
 import Card from "../components/Card";
 import CheckBox from "../components/CheckBox";
 import Input from "../components/Input";
@@ -51,6 +51,9 @@ const Activation: React.FC = () => {
               break;
             case "brandColor":
               setBrandColor(atribute[key]);
+              break;
+            case "backgroundColor":
+              setBgColor(atribute[key]);
               break;
             default:
               break;
@@ -94,19 +97,33 @@ const Activation: React.FC = () => {
           </div>
         </Card>
         <Card>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <div style={{ flexDirection: "column", position: "relative" }}>
               <Input
-                onClick={(e) => {
-                  setShowColorOne(!showColorOne);
-                }}
-                onBlur={() => {
-                  const atribute = camelize("Brand Color");
-                  setStoredAttribute(atribute, brandColorValue);
-                }}
                 label="Brand Color"
                 setValue={setBrandColor}
                 value={brandColorValue}
+              />
+              <ColorizeIcon
+                sx={{
+                  position: "absolute",
+                  top: "6px",
+                  left: "200px",
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: "blue",
+                  },
+                }}
+                onClick={(e) => {
+                  setShowColorTwo(false);
+                  setShowColorOne(!showColorOne);
+                }}
               />
               {showColorOne && (
                 <HexColorPicker
@@ -114,26 +131,37 @@ const Activation: React.FC = () => {
                     position: "absolute",
                     width: "100px",
                     height: "100px",
-                    top: "230px",
-                    right: "46px",
+                    top: "-6px",
+                    right: "-6px",
                   }}
                   color={brandColorValue}
-                  onChange={setBrandColor}
+                  onChange={(newColor) => {
+                    setBrandColor(newColor);
+                    setStoredAttribute("brandColor", newColor);
+                  }}
                 />
               )}
             </div>
-            <div style={{ flexDirection: "column" }}>
+            <div style={{ flexDirection: "column", position: "relative" }}>
               <Input
-                onClick={(e) => {
-                  setShowColorTwo(!showColorTwo);
-                }}
-                onBlur={() => {
-                  const atribute = camelize("Background Color");
-                  setStoredAttribute(atribute, bgColorValue);
-                }}
                 label="Background Color"
                 setValue={setBgColor}
                 value={bgColorValue}
+              />
+              <ColorizeIcon
+                sx={{
+                  position: "absolute",
+                  top: "6px",
+                  left: "200px",
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: "blue",
+                  },
+                }}
+                onClick={(e) => {
+                  setShowColorOne(false);
+                  setShowColorTwo(!showColorTwo);
+                }}
               />
               {showColorTwo && (
                 <HexColorPicker
@@ -141,11 +169,14 @@ const Activation: React.FC = () => {
                     position: "absolute",
                     width: "100px",
                     height: "100px",
-                    top: "230px",
-                    right: "46px",
+                    top: "-56px",
+                    right: "-6px",
                   }}
                   color={bgColorValue}
-                  onChange={setBgColor}
+                  onChange={(newColor) => {
+                    setBgColor(newColor);
+                    setStoredAttribute("backgroundColor", newColor);
+                  }}
                 />
               )}
             </div>
