@@ -29,6 +29,38 @@ export const inject = (
   const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=${key}&host=&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
   let height = "192px";
 
+  if (size === "small") {
+    height = "155px";
+  }
+
+  if (layoutVertical !== "vertical" && !size) {
+    height = "210px";
+  }
+
+  if (layoutVertical === "vertical" && size === "small") {
+    height = "235px";
+  }
+
+  if (layoutVertical !== "vertical" && size === "medium") {
+    height = "195px";
+  }
+
+  if (layoutVertical === "vertical" && size === "medium") {
+    height = "240px";
+  }
+
+  if (layoutVertical === "vertical" && size === "medium") {
+    height = "240px";
+  }
+
+  if (layoutVertical === "vertical") {
+    if (isMobile) {
+      height = "170px";
+    } else {
+      height = "260px";
+    }
+  }
+
   const innerHTML = `
                           <iframe
                              id="papayaUWIframe"

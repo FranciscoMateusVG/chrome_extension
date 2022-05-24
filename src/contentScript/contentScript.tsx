@@ -47,7 +47,7 @@ const App: React.FC = () => {
           const attributes = new Attributes(result);
           attributes.fill();
           inject(request.injection, element, attributes);
-          element.style.border = "none";
+          if (element) element.style.border = "none";
         });
       }
       sendResponse("ok");
