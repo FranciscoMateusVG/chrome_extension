@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { Attributes } from "../utils/classes";
+import { getStoredAttributes } from "../utils/storage";
 import { inject } from "./inject";
 
 const App: React.FC = () => {
@@ -41,7 +43,12 @@ const App: React.FC = () => {
         setActive(request.status);
       }
       if (request.message === "injection") {
-        inject(request.injection, element);
+        getStoredAttributes().then((result) => {
+          const attributes = new Attributes(result);
+          attributes.fill();
+          inject(request.injection, element, attributes);
+          element.style.border = "none";
+        });
       }
       sendResponse("ok");
     }

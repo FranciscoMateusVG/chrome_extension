@@ -1,9 +1,9 @@
-interface Atributes {
-  icon: string;
+export interface AttributesProps {
+  noIcon: string;
   brandColor: string;
   key: string;
-  mode: string;
-  layout: string;
+  darkMode: string;
+  layoutVertical: string;
   font: string;
   size: string;
   backgroundColor: string;
@@ -12,20 +12,28 @@ interface Atributes {
 export const inject = (
   where: string,
   element: Element,
-  atributes?: Atributes
+  attributes: AttributesProps
 ) => {
-  const { icon, brandColor, key, mode, layout, font, size, backgroundColor } =
-    atributes;
-
+  const {
+    noIcon,
+    brandColor,
+    key,
+    darkMode,
+    layoutVertical,
+    font,
+    size,
+    backgroundColor,
+  } = attributes;
+  console.log(attributes);
   const isMobile = mobileCheck();
-
-  const src = `"https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${icon}&brandColor=${brandColor}&key=${key}&host=&mode=${mode}&layout=${layout}&font=${font}&size=${size}&backgroundColor=${backgroundColor}"`;
+  const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?isGeneric=undefined&partner=Universal_Embedded&&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=${key}&host=&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
+  let height = "192px";
 
   const innerHTML = `
                           <iframe
                              id="papayaUWIframe"
-                             style="width: 100%;"
-                             src=${src}
+                             style="width: 100%;height:${height}"
+                             src="${src}"
                              scrolling="no"
                              frameborder="0"
                              allowtransparency="true"
@@ -37,6 +45,7 @@ export const inject = (
     div.innerHTML = innerHTML;
     div.id = "papaya-universal";
     div.style.width = "100%";
+    div.style.height = height;
     switch (where) {
       case "before":
         element.parentNode.insertBefore(div, element);
