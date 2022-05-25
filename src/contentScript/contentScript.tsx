@@ -6,6 +6,8 @@ import { inject } from "./inject";
 
 const App: React.FC = () => {
   const [element, setElement] = useState<any>("");
+  const [attributes, setAttributes] = useState<any>("");
+  const [where, setWhere] = useState<string>("");
   const [active, setActive] = useState<boolean>(false);
 
   function processEvent(e) {
@@ -35,23 +37,36 @@ const App: React.FC = () => {
     }
   }, [active]);
 
-  chrome.runtime.onMessage.addListener(
-    // this is the message listener
-    function (request, sender, sendResponse) {
-      if (request.message === "status") {
-        setActive(request.status);
-      }
-      if (request.message === "injection") {
-        getStoredAttributes().then((result) => {
-          const attributes = new Attributes(result);
-          attributes.fill();
-          inject(request.injection, element, attributes);
-          if (element) element.style.border = "none";
-        });
-      }
-      sendResponse("ok");
+  useEffect(() => {
+    console.log("aqui na paraiba");
+    if (attributes && where && element) {
+      console.log("quantas vezes");
+      inject(where, element, attributes);
+      element.style.border = "none";
     }
-  );
+  }, [attributes, where]);
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(
+      // this is the message listener
+      function (request, sender, sendResponse) {
+        console.log("active");
+        if (request.message === "status") {
+          setActive(request.status);
+        }
+        if (request.message === "injection") {
+          console.log("MOULIN ROUGE");
+          getStoredAttributes().then((result) => {
+            const attributes = new Attributes(result);
+            attributes.fill();
+            setAttributes(attributes);
+            setWhere(request.injection);
+          });
+        }
+        sendResponse("ok");
+      }
+    );
+  }, []);
 
   return <></>;
 };
