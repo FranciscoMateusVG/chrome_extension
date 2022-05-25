@@ -16,7 +16,7 @@ const App: React.FC = () => {
       setElement((previouseElement) => {
         if (previouseElement) previouseElement.style.border = "none";
 
-        targetElement.style.border = "1px solid red";
+        targetElement.style.border = "2px dashed red";
 
         return targetElement;
       });
