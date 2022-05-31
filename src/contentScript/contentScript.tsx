@@ -72,9 +72,9 @@ const App: React.FC = () => {
 };
 
 const rootDiv = document.createElement("div");
-rootDiv.id = "root";
+rootDiv.id = "extension";
 document.body.appendChild(rootDiv);
 document.addEventListener;
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("extension"));
 root.render(<App />);
