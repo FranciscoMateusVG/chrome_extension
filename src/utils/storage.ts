@@ -1,4 +1,5 @@
 export interface LocalStorage {
+  active: string;
   noIcon: string;
   darkMode: string;
   layoutVertical: string;
@@ -26,6 +27,7 @@ export function getStoredAttributes(): Promise<
   }[]
 > {
   const keys: LocalStorageKeys[] = [
+    "active",
     "darkMode",
     "layoutVertical",
     "noIcon",

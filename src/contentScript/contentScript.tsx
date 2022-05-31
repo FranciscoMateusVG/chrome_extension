@@ -38,9 +38,7 @@ const App: React.FC = () => {
   }, [active]);
 
   useEffect(() => {
-    console.log("aqui na paraiba");
     if (attributes && where && element) {
-      console.log("quantas vezes");
       inject(where, element, attributes);
       element.style.border = "none";
     }
@@ -51,18 +49,16 @@ const App: React.FC = () => {
       // this is the message listener
       function (request, sender, sendResponse) {
         console.log("active");
-        if (request.message === "status") {
-          setActive(request.status);
-        }
-        if (request.message === "injection") {
-          console.log("MOULIN ROUGE");
+        if (request.message === "status") setActive(request.status);
+
+        if (request.message === "injection")
           getStoredAttributes().then((result) => {
             const attributes = new Attributes(result);
             attributes.fill();
             setAttributes(attributes);
             setWhere(request.injection);
           });
-        }
+
         sendResponse("ok");
       }
     );

@@ -13,12 +13,14 @@ import {
   noIcon,
   size,
   bgColor,
+  universalActiveValue,
 } from "../../atoms";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 import Card from "../components/Card";
 import CheckBox from "../components/CheckBox";
 import Input from "../components/Input";
 import Select from "../components/Select";
+import { Button } from "@mui/material";
 
 const Activation: React.FC = () => {
   const [showColorOne, setShowColorOne] = useState(false);
@@ -29,6 +31,7 @@ const Activation: React.FC = () => {
   const [sizeValue, setSize] = useRecoilState(size);
   const [brandColorValue, setBrandColor] = useRecoilState(brandColor);
   const [bgColorValue, setBgColor] = useRecoilState(bgColor);
+  const [activeValue, setActive] = useRecoilState(universalActiveValue);
 
   useEffect(() => {
     getStoredAttributes().then((result) => {
@@ -37,6 +40,9 @@ const Activation: React.FC = () => {
           const key = Object.keys(atribute)[0];
           const value = atribute[key] === "true";
           switch (key) {
+            case "active":
+              setActive(value);
+              break;
             case "darkMode":
               setDarkMode(value);
               break;
@@ -65,7 +71,59 @@ const Activation: React.FC = () => {
 
   return (
     <>
-      <ToggleButton />
+      {/* <ToggleButton /> */}
+      <div style={{ marginBottom: "10px" }}>
+        {activeValue && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              const status = false;
+              setActive(status);
+              setStoredAttribute("active", `${status}`);
+              chrome.tabs.query(
+                { active: true, currentWindow: true },
+                function (tabs) {
+                  chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    {
+                      message: "status",
+                      status: true,
+                    },
+                    function (response) {}
+                  );
+                }
+              );
+            }}
+          >
+            Activate
+          </Button>
+        )}
+        {!activeValue && (
+          <Button
+            variant="outlined"
+            onClick={() => {
+              const status = true;
+              setActive(status);
+              setStoredAttribute("active", `${status}`);
+              chrome.tabs.query(
+                { active: true, currentWindow: true },
+                function (tabs) {
+                  chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    {
+                      message: "status",
+                      status: false,
+                    },
+                    function (response) {}
+                  );
+                }
+              );
+            }}
+          >
+            Disable
+          </Button>
+        )}
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <Card>
           <div style={{ display: "flex", flexDirection: "column" }}>

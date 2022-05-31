@@ -34,7 +34,7 @@ const SelectComponent: React.FC<ISelect> = ({
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={value}
+        value={value ? value : "large"}
         label={label}
         onChange={handleChange}
       >

@@ -44,10 +44,12 @@ export class Attributes implements AttributesProps {
             this[key] = value;
             break;
           case "brandColor":
-            this[key] = value.replace("#", "");
+            const bC = value ? value.replace("#", "") : "";
+            this[key] = bC;
             break;
           case "backgroundColor":
-            this[key] = value.replace("#", "");
+            const bgC = value ? value.replace("#", "") : "";
+            this[key] = bgC;
             break;
 
           default:

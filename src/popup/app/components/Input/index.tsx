@@ -27,7 +27,7 @@ const InputComponent: React.FC<IInputComponent> = ({
   return (
     <TextField
       size="small"
-      value={value}
+      value={value ? value : ""}
       onChange={handleChange}
       id="outlined-basic"
       label={label}
