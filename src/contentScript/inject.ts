@@ -84,6 +84,10 @@ export const inject = (
         element.parentNode.insertBefore(div, element.nextElementSibling);
         break;
       default:
+        console.log(element.tagName);
+        if (element.tagName === "IMG" || element.tagName === "INPUT") {
+          element.replaceWith(div);
+        }
         element.innerHTML = innerHTML;
         element.id = "papaya-universal";
         break;
