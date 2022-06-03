@@ -35,12 +35,14 @@ const Activation: React.FC = () => {
 
   useEffect(() => {
     getStoredAttributes().then((result) => {
+      console.log(result);
       if (result) {
         result.forEach((atribute) => {
           const key = Object.keys(atribute)[0];
           const value = atribute[key] === "true";
           switch (key) {
             case "active":
+              console.log(value);
               setActive(value);
               break;
             case "darkMode":
@@ -77,9 +79,9 @@ const Activation: React.FC = () => {
           <Button
             variant="contained"
             onClick={() => {
-              const status = false;
+              const status = true;
               setActive(status);
-              setStoredAttribute("active", `${status}`);
+              setStoredAttribute("active", `${true}`);
               chrome.tabs.query(
                 { active: true, currentWindow: true },
                 function (tabs) {
@@ -102,9 +104,9 @@ const Activation: React.FC = () => {
           <Button
             variant="outlined"
             onClick={() => {
-              const status = true;
+              const status = false;
               setActive(status);
-              setStoredAttribute("active", `${status}`);
+              setStoredAttribute("active", `${false}`);
               chrome.tabs.query(
                 { active: true, currentWindow: true },
                 function (tabs) {

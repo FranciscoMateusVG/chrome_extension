@@ -24,7 +24,7 @@ export const inject = (
   } = attributes;
 
   const isMobile = mobileCheck();
-  const src = `https://test.papayapay.com/widgets/v2/endpoints/universal.html.php?partner=Universal_Embedded&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=INSERT_KEY_HERE&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=test.papayapay.com&pph=https://test.papayapay.com`;
+  const src = `https://papayapay.com/widgets/v2/endpoints/universal.html.php?partner=Chrome_Extension&mobile=${isMobile}&icon=${noIcon}&brandColor=${brandColor}&key=INSERT_KEY_HERE&mode=${darkMode}&layout=${layoutVertical}&font=${font}&size=${size}&backgroundColor=${backgroundColor}&host=papayapay.com&pph=https://papayapay.com`;
   let height = "192px";
 
   if (size === "small") {
