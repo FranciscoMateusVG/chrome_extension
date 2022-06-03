@@ -48,7 +48,7 @@ const App: React.FC = () => {
     chrome.runtime.onMessage.addListener(
       // this is the message listener
       function (request, sender, sendResponse) {
-        console.log("active");
+        console.log("active", request.status);
         if (request.message === "status") setActive(request.status);
 
         if (request.message === "injection")
@@ -62,6 +62,22 @@ const App: React.FC = () => {
         sendResponse("ok");
       }
     );
+
+    getStoredAttributes().then((result) => {
+      if (result) {
+        result.forEach((atribute) => {
+          const key = Object.keys(atribute)[0];
+          const value = atribute[key] === "true";
+          switch (key) {
+            case "active":
+              setActive(value);
+              break;
+            default:
+              break;
+          }
+        });
+      }
+    });
   }, []);
 
   return <></>;

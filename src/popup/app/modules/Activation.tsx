@@ -73,7 +73,7 @@ const Activation: React.FC = () => {
     <>
       {/* <ToggleButton /> */}
       <div style={{ marginBottom: "10px" }}>
-        {activeValue && (
+        {!activeValue && (
           <Button
             variant="contained"
             onClick={() => {
@@ -98,7 +98,7 @@ const Activation: React.FC = () => {
             Activate
           </Button>
         )}
-        {!activeValue && (
+        {activeValue && (
           <Button
             variant="outlined"
             onClick={() => {

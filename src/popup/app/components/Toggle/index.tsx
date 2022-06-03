@@ -1,10 +1,7 @@
 import { Switch } from "@mui/material";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import {
-  getStoredAttributes,
-  setStoredAttribute,
-} from "../../../../utils/storage";
+import { setStoredAttribute } from "../../../../utils/storage";
 import { universalActiveValue } from "../../../atoms";
 
 export const ToggleButton: React.FC = () => {
